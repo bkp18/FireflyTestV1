@@ -11,7 +11,7 @@
         "README.md",
         "main.blocks",
         "main.ts",
-        "FireflyTestV1.ts"
+        "fireflyTestV3.ts"
     ],
     "testFiles": [
         "test.ts"

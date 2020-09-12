@@ -1,9 +1,6 @@
 basic.forever(function () {
-    Firefly.setServo(Firefly.ServoPinValues.servo4, 12)
-    basic.pause(1000)
-    Firefly.setServo(Firefly.ServoPinValues.servo4, 111)
-    basic.pause(1000)
-    Firefly.setDC(Firefly.DCPinValues.dcmotor4, Firefly.DCDirectionValues.forward, 86)
+    basic.showNumber(2)
+    Firefly.setDC(Firefly.DCPinValues.dcmotor4, Firefly.DCDirectionValues.forward, 84)
     basic.pause(1000)
     Firefly.setDC(Firefly.DCPinValues.dcmotor4, Firefly.DCDirectionValues.forward, 0)
     basic.pause(1000)
