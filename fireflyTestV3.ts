@@ -1,6 +1,7 @@
 /**
  * Blocks for driving servo and DC motors, using the Firefly connection Board
  */
+//% groups='["DC Motor","Servo Motor"]'
 //% weight=111 color=#1565B2 icon="\uf085" block="Firefly"
 namespace Firefly {
     //Initialize with using servo
@@ -37,7 +38,8 @@ namespace Firefly {
     }
 
     //% blockId=set_servo
-    //% block="Set %servoAtPin| to %angle"
+    //% block="Set %servoAtPin| to position %angle"
+    //% group="Servo Motor"
     //% angle.min=0 angle.max=138 angle.defl=0
     export function setServo(servoAtPin: ServoPinValues, angle: number): void {
         adjustMotorType("servo")
@@ -71,11 +73,12 @@ namespace Firefly {
     //% blockHidden=true
     export enum DCDirectionValues {
         forward = 0,
-        backwards = 1
+        backward = 1
     }
 
     //% blockId=set_dc
-    //% block="Set %dcAtPin| to %direction| at %speed"
+    //% block="Drive %dcAtPin| %direction| at speed %speed"
+    //% group="DC Motor"
     //% speed.min=0 speed.max=255 speed.defl=0
     export function setDC(dcAtPin: DCPinValues, direction: DCDirectionValues, speed: number): void {
         adjustMotorType("dc")

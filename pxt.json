@@ -5,7 +5,8 @@
     "dependencies": {
         "core": "*",
         "radio": "*",
-        "pxt-pca9685": "github:jdarling/pxt-pca9685#v0.0.5"
+        "pxt-pca9685": "github:jdarling/pxt-pca9685#v0.0.5",
+        "BitBot": "github:4tronix/bitbot#1.4.6"
     },
     "files": [
         "README.md",
