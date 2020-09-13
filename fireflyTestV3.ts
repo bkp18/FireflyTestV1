@@ -1,6 +1,6 @@
 /*
-enum ServoPinValues2 {
-    //% block=særvo1
+enum ServoPinValuesDansk {
+    //% block=servo1
     servo1 = 1,
     //% block=servo2
     servo2 = 2,
@@ -9,7 +9,25 @@ enum ServoPinValues2 {
     //% block=servo4
     servo4 = 4
 }
+
+enum DCPinValuesDansk {
+    //% block=dcmotor1
+    dcmotor1 = 1,
+    //% block=dcmotor2
+    dcmotor2 = 2,
+    //% block=dcmotor3
+    dcmotor3 = 3,
+    //% block=dcmotor4
+    dcmotor4 = 4
+}
 */
+enum DCDirectionValuesDansk {
+    //% block=fremad
+    forward = 0,
+    //% block=baglæns
+    backward = 1
+}
+
 
 
 
@@ -22,7 +40,6 @@ namespace Firefly {
     //% block=ServoPinValues
     //% blockHidden=true
     export enum ServoPinValues {
-        //% block=servo1
         servo1 = 1,
         servo2 = 2,
         servo3 = 3,
@@ -41,12 +58,8 @@ namespace Firefly {
     //% block
     //% blockHidden=true
     export enum DCDirectionValues {
-        //forward = 0,
-        //backward = 1
-        //% block = fremad
-        fremad = 0,
-        //% block = baglæns
-        baglaens = 1
+        forward = 0,
+        backward = 1
     }
 
     //Initialize with using servo
@@ -74,7 +87,7 @@ namespace Firefly {
     }
 
     //% blockId=set_servo
-    //% block="Set %servoAtPin2| to position %angle"
+    //% block="Sæt %servoAtPin| til position %angle"
     //% group="Servo Motor"
     //% angle.min=0 angle.max=138 angle.defl=0
     export function setServo(servoAtPin: ServoPinValues, angle: number): void {
@@ -97,10 +110,10 @@ namespace Firefly {
     }
 
     //% blockId=set_dc
-    //% block="Drive %dcAtPin| %direction| at speed %speed"
+    //% block="Kør %dcAtPin| %direction| med hastighed %speed"
     //% group="DC Motor"
     //% speed.min=0 speed.max=255 speed.defl=0
-    export function setDC(dcAtPin: DCPinValues, direction: DCDirectionValues, speed: number): void {
+    export function setDC(dcAtPin: DCPinValues, direction: DCDirectionValuesDansk, speed: number): void {
         adjustMotorType("dc")
         
         let inputA = 0;
