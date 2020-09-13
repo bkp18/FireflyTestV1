@@ -14,7 +14,10 @@
         "README.md",
         "main.blocks",
         "main.ts",
-        "fireflyTestV3.ts"
+        "fireflyTestV3.ts",
+        "_locales/dk/fireflytestv1-strings.json",
+        "_locales/dk/fireflytestv1-jsdoc-strings.json",
+        "_locales/de/fireflytestv1-strings.json"
     ],
     "testFiles": [
         "test.ts"

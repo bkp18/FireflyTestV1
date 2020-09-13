@@ -4,6 +4,32 @@
 //% groups='["DC Motor","Servo Motor"]'
 //% weight=111 color=#1565B2 icon="\uf085" block="Firefly"
 namespace Firefly {
+    //% block=ServoPinValues
+    //% blockHidden=true
+    export enum ServoPinValues {
+        //% block=servo1
+        servo1 = 1,
+        servo2 = 2,
+        servo3 = 3,
+        servo4 = 4
+    }
+
+    //% block
+    //% blockHidden=true
+    export enum DCPinValues {
+        dcmotor1 = 1,
+        dcmotor2 = 2,
+        dcmotor3 = 3,
+        dcmotor4 = 4
+    }
+
+    //% block
+    //% blockHidden=true
+    export enum DCDirectionValues {
+        forward = 0,
+        backward = 1
+    }
+
     //Initialize with using servo
     let usingServo = true;
     PCA9685.reset(105)
@@ -28,15 +54,6 @@ namespace Firefly {
         }
     }
 
-    //% block
-    //% blockHidden=true
-    export enum ServoPinValues {
-        servo1 = 1,
-        servo2 = 2,
-        servo3 = 3,
-        servo4 = 4
-    }
-
     //% blockId=set_servo
     //% block="Set %servoAtPin| to position %angle"
     //% group="Servo Motor"
@@ -58,22 +75,6 @@ namespace Firefly {
                 PCA9685.setServoPosition(PCA9685.ServoNum.Servo16, angle, 105)
                 break;
         }
-    }
-
-    //% block
-    //% blockHidden=true
-    export enum DCPinValues {
-        dcmotor1 = 1,
-        dcmotor2 = 2,
-        dcmotor3 = 3,
-        dcmotor4 = 4
-    }
-
-    //% block
-    //% blockHidden=true
-    export enum DCDirectionValues {
-        forward = 0,
-        backward = 1
     }
 
     //% blockId=set_dc

@@ -1,6 +1,1 @@
-input.onButtonPressed(Button.A, function () {
-	
-})
-basic.forever(function () {
-    Firefly.setDC(Firefly.DCPinValues.dcmotor1, Firefly.DCDirectionValues.forward, 0)
-})
+Firefly.setServo(Firefly.ServoPinValues.servo1, 0)
