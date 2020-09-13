@@ -4,12 +4,7 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "radio": "*",
-        "pxt-pca9685": "github:jdarling/pxt-pca9685#v0.0.5",
-        "BitBot": "github:4tronix/bitbot#1.4.6",
-        "radio-broadcast": "*",
-        "robotbit": "github:kittenbot/pxt-robotbit#v0.3.6",
-        "pxt-sonar": "github:microsoft/pxt-sonar#v0.0.5"
+        "pxt-pca9685": "github:jdarling/pxt-pca9685#v0.0.5"
     },
     "files": [
         "README.md",
@@ -24,5 +19,5 @@
     "supportedTargets": [
         "microbit"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }

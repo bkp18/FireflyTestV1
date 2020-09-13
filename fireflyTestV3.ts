@@ -34,7 +34,7 @@ enum DCDirectionValuesDansk {
 /**
  * Blocks for driving servo and DC motors, using the Firefly connection Board
  */
-//% groups='["DC Motor","Servo Motor"]'
+//% groups='["DC Motor","Servo Motor", "Afstands Sensor"]'
 //% weight=111 color=#1565B2 icon="\uf085" block="Firefly"
 namespace Firefly {
     //% block=ServoPinValues
@@ -151,25 +151,21 @@ namespace Firefly {
         }
     }
 
-    /**
-     * Send a ping and get the echo time (in microseconds) as a result
-     * @param trig tigger pin
-     * @param echo echo pin
-     * @param maxCmDistance maximum distance in centimeters (default is 500)
-     */
-    //% blockId=sonar_ping block="ping trig %trig|echo %echo"
-    export function ping(trig: DigitalPin, echo: DigitalPin, maxCmDistance = 500): number {
-        // send pulse
-        pins.setPull(trig, PinPullMode.PullNone);
-        pins.digitalWritePin(trig, 0);
-        control.waitMicros(2);
-        pins.digitalWritePin(trig, 1);
+    //% blockId=sonar_ping block="Afstand i CM: Trig %trig|Echo %echo"
+    //% group="Afstands Sensor (HC-SR04): Afstand til nærmeste objekt"
+    export function getDistance(triggerPin: DigitalPin, echoPin: DigitalPin): number {
+        //Send Trigger Signal
+        pins.setPull(triggerPin, PinPullMode.PullNone);
+        pins.digitalWritePin(triggerPin, 0);
         control.waitMicros(10);
-        pins.digitalWritePin(trig, 0);
+        pins.digitalWritePin(triggerPin, 1);
+        control.waitMicros(10);
+        pins.digitalWritePin(triggerPin, 0);
 
-        // read pulse
-        const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 58);
+        //Await Return Signal
+        const distance = pins.pulseIn(echoPin, PulseValue.High);
 
-        return Math.idiv(d, 58);
+        //Return Distance in CM (1/(0.034/2) = 58.8)
+        return Math.idiv(distance, 59);
     }
 }
