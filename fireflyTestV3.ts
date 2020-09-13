@@ -1,73 +1,22 @@
-/*
-enum ServoPinValuesDansk {
-    //% block=servo1
-    servo1 = 1,
-    //% block=servo2
-    servo2 = 2,
-    //% block=servo3
-    servo3 = 3,
-    //% block=servo4
-    servo4 = 4
-}
-
-enum DCPinValuesDansk {
-    //% block=dcmotor1
-    dcmotor1 = 1,
-    //% block=dcmotor2
-    dcmotor2 = 2,
-    //% block=dcmotor3
-    dcmotor3 = 3,
-    //% block=dcmotor4
-    dcmotor4 = 4
-}
-*/
 enum DCDirectionValuesDansk {
-    //% block=fremad
-    forward = 0,
-    //% block=baglæns
-    backward = 1
-}
-
-
-
+        //% block=fremad
+        forward = 0,
+        //% block=baglæns
+        backward = 1
+    }
 
 /**
  * Blocks for driving servo and DC motors, using the Firefly connection Board
  */
-//% groups='["DC Motor","Servo Motor", "Afstands Sensor"]'
+//% groups='["DC Motor","Servo Motor", "Afstands Sensor (HC-SR04)"]'
 //% weight=111 color=#1565B2 icon="\uf085" block="Firefly"
 namespace Firefly {
-    //% block=ServoPinValues
-    //% blockHidden=true
-    export enum ServoPinValues {
-        servo1 = 1,
-        servo2 = 2,
-        servo3 = 3,
-        servo4 = 4
-    }
-
-    //% block
-    //% blockHidden=true
-    export enum DCPinValues {
-        dcmotor1 = 1,
-        dcmotor2 = 2,
-        dcmotor3 = 3,
-        dcmotor4 = 4
-    }
-
-    //% block
-    //% blockHidden=true
-    export enum DCDirectionValues {
-        forward = 0,
-        backward = 1
-    }
-
     //Initialize with using servo
     let usingServo = true;
     PCA9685.reset(105)
     PCA9685.init(105, 40)
 
-    //Switches to decired motor type
+    //Switches to desired motor type
     function adjustMotorType(wantedMotorType: string): void {
         if(wantedMotorType == "servo" && !usingServo) {
             console.log("adjust to servo")
@@ -86,7 +35,17 @@ namespace Firefly {
         }
     }
 
+    //% block
+    //% blockHidden=true
+    export enum ServoPinValues {
+        servo1 = 1,
+        servo2 = 2,
+        servo3 = 3,
+        servo4 = 4
+    }
+
     //% blockId=set_servo
+    /*//% block="Set %servoAtPin| to %angle"*/
     //% block="Sæt %servoAtPin| til position %angle"
     //% group="Servo Motor"
     //% angle.min=0 angle.max=138 angle.defl=0
@@ -109,8 +68,25 @@ namespace Firefly {
         }
     }
 
+    //% block
+    //% blockHidden=true
+    export enum DCPinValues {
+        dcmotor1 = 1,
+        dcmotor2 = 2,
+        dcmotor3 = 3,
+        dcmotor4 = 4
+    }
+
+    //% block
+    //% blockHidden=true
+    export enum DCDirectionValues {
+        forward = 0,
+        backwards = 1
+    }
+
     //% blockId=set_dc
-    //% block="Kør %dcAtPin| %direction| med hastighed %speed"
+    /*//% block="Set %dcAtPin| to %direction| at %speed"*/
+    //% block="Kør %dcAtPin| %direction | med hastighed %speed"
     //% group="DC Motor"
     //% speed.min=0 speed.max=255 speed.defl=0
     export function setDC(dcAtPin: DCPinValues, direction: DCDirectionValuesDansk, speed: number): void {
@@ -151,21 +127,48 @@ namespace Firefly {
         }
     }
 
-    //% blockId=getDistance block="Afstand i CM: Trig %triggerPin|Echo %echoPin"
+    //% blockId=getDistance 
+    //% block="Afstand i CM: Trig %triggerPin|Echo %echoPin"
     //% group="Afstands Sensor (HC-SR04)"
-    export function getDistance(triggerPin: DigitalPin, echoPin: DigitalPin): number {
-        //Send Trigger Signal
-        pins.setPull(triggerPin, PinPullMode.PullNone);
-        pins.digitalWritePin(triggerPin, 0);
-        control.waitMicros(10);
-        pins.digitalWritePin(triggerPin, 1);
-        control.waitMicros(10);
-        pins.digitalWritePin(triggerPin, 0);
+    export function getSampledDistance(triggerPin: DigitalPin, echoPin: DigitalPin): number {
+        let sampledDistanceOriginal = getDistance(triggerPin, echoPin)
+        let sampledDistanceNew = 0
+        
+        let i = 0
+        while(i < 3) {     
+            sampledDistanceNew = getDistance(triggerPin, echoPin)
+            if((sampledDistanceNew*0.9 < sampledDistanceOriginal) && (sampledDistanceOriginal < sampledDistanceNew*1.1)) {
+                //console.log("distance fitting");
+                break
+            }
 
-        //Await Return Signal
-        const distance = pins.pulseIn(echoPin, PulseValue.High);
+            sampledDistanceOriginal = sampledDistanceNew
+            i = i+1
+        }
+        
+        return sampledDistanceNew
+    }
 
-        //Return Distance in CM (1/(0.034/2) = 58.8)
-        return Math.idiv(distance, 59);
+    function getDistance(triggerPin: number, echoPin: number): number {
+        let distance = 0
+        let counter = 0
+        
+        while(distance == 0 && counter < 3) {
+            //Send Trigger Signal
+            pins.setPull(triggerPin, PinPullMode.PullNone);
+            pins.digitalWritePin(triggerPin, 0);
+            control.waitMicros(10);
+            pins.digitalWritePin(triggerPin, 1);
+            control.waitMicros(2);
+            pins.digitalWritePin(triggerPin, 0);
+
+            //Await Return Signal: (350cm / (0.034/1.32)) = 13600
+            distance = pins.pulseIn(echoPin, PulseValue.High, 13600);
+        }
+
+        //Return Distance in CM
+        //1.32 should be 2 (forth and back), but is adjusted to practical usage
+        distance = distance*0.034/1.32 
+        return Math.roundWithPrecision(distance, 0)
     }
 }
