@@ -1,1 +1,1 @@
-Firefly.setServo(Firefly.ServoPinValues.servo1, 0)
+Firefly.setServo(SevoPinValues2.sevo3, 0)

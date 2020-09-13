@@ -1,3 +1,16 @@
+enum SevoPinValues2 {
+    //% block=servo1
+    sevo1 = 1,
+    //% block=servo2
+    sevo2 = 2,
+    //% block=servo3
+    sevo3 = 3,
+    //% block=servo4
+    sevo4 = 4
+}
+
+
+
 /**
  * Blocks for driving servo and DC motors, using the Firefly connection Board
  */
@@ -55,10 +68,10 @@ namespace Firefly {
     }
 
     //% blockId=set_servo
-    //% block="Set %servoAtPin| to position %angle"
+    //% block="Set %sevoAtPin2| to position %angle"
     //% group="Servo Motor"
     //% angle.min=0 angle.max=138 angle.defl=0
-    export function setServo(servoAtPin: ServoPinValues, angle: number): void {
+    export function setServo(servoAtPin: SevoPinValues2, angle: number): void {
         adjustMotorType("servo")
 
         switch(servoAtPin) {
