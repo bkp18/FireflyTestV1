@@ -1,11 +1,11 @@
 enum SevoPinValues2 {
-    //% block=servo1
+    //% block=sevo1
     sevo1 = 1,
-    //% block=servo2
+    //% block=sevo2
     sevo2 = 2,
-    //% block=servo3
+    //% block=sevo3
     sevo3 = 3,
-    //% block=servo4
+    //% block=sevo4
     sevo4 = 4
 }
 
