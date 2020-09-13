@@ -1,12 +1,12 @@
-enum SevoPinValues2 {
-    //% block=sevo1
-    sevo1 = 1,
-    //% block=sevo2
-    sevo2 = 2,
-    //% block=sevo3
-    sevo3 = 3,
-    //% block=sevo4
-    sevo4 = 4
+enum ServoPinValues2 {
+    //% block=servo1
+    servo1 = 1,
+    //% block=servo2
+    servo2 = 2,
+    //% block=servo3
+    servo3 = 3,
+    //% block=servo4
+    servo4 = 4
 }
 
 
@@ -68,10 +68,10 @@ namespace Firefly {
     }
 
     //% blockId=set_servo
-    //% block="Set %sevoAtPin2| to position %angle"
+    //% block="Set %servoAtPin2| to position %angle"
     //% group="Servo Motor"
     //% angle.min=0 angle.max=138 angle.defl=0
-    export function setServo(servoAtPin: SevoPinValues2, angle: number): void {
+    export function setServo(servoAtPin: ServoPinValues2, angle: number): void {
         adjustMotorType("servo")
 
         switch(servoAtPin) {
