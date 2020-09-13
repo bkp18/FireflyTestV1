@@ -151,8 +151,8 @@ namespace Firefly {
         }
     }
 
-    //% blockId=sonar_ping block="Afstand i CM: Trig %trig|Echo %echo"
-    //% group="Afstands Sensor (HC-SR04): Afstand til nærmeste objekt"
+    //% blockId=getDistance block="Afstand i CM: Trig %triggerPin|Echo %echoPin"
+    //% group="Afstands Sensor (HC-SR04)"
     export function getDistance(triggerPin: DigitalPin, echoPin: DigitalPin): number {
         //Send Trigger Signal
         pins.setPull(triggerPin, PinPullMode.PullNone);
